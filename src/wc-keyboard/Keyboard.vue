@@ -96,8 +96,11 @@
 				<div class="key" @touchstart="typing('8')">8</div>
 				<div class="key" @touchstart="typing('9')">9</div>
 				<div class="key dot" 
-					@touchstart="typing('.')">
+					@touchstart="typing('.')" v-if="showDecimal">
 					<i class="iconfont icon-dot"></i>
+				</div>
+				<div class="key dot" 
+					 v-if="!showDecimal">
 				</div>
 				<div class="key" 
 					@touchstart="typing('0')">0</div>
@@ -113,7 +116,7 @@
 </template>
 <script>	
 	export default {
-		props: ['show'],
+		props: ['show','showDecimal'],
 		methods: {
 			/*防止点击完成按钮左边的空白区域收起键盘*/
 			fn () {},

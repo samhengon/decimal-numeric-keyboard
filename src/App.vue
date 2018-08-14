@@ -15,6 +15,7 @@
         label="消费金额"
         inter="5"
         decimal="2"
+        :allowLeadingZero="false"
         v-model="val"
         @keyboardtouchstart="test"
         ref="price" />
@@ -25,6 +26,7 @@
         label="haha2"
         inter="5"
         decimal="0"
+        :allowLeadingZero="true"
         v-model="gg"
         @keyboardtouchstart="test"
         ref="qty" />

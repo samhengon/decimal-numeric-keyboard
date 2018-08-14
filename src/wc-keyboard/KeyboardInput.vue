@@ -57,6 +57,7 @@
 		<!-- 自定义键盘 -->
 		<keyboard 
 			:show="keyboard"
+			:showDecimal=showDecimalKey
 			@typing="typing"
 			@complete="blur"/>
 	</div>
@@ -90,6 +91,9 @@
 			},
 			placeholder: {
 				default: '询问服务员后输入'
+			},
+			allowLeadingZero: {
+				default: false
 			}
 		},
 		data () {
@@ -102,6 +106,11 @@
 				cursorDuration: 600,
 				bodyHeight: '',
 				bodyOverflow: ''
+			}
+		},
+		computed: {
+			showDecimalKey: function() {
+				return (this.decimal > 0);
 			}
 		},
 		methods: {
@@ -166,7 +175,7 @@
 			toCompletion () {
 				let list = this.value.split('.');
 				if (typeof list[1] === 'undefined') {
-					if (this.val !== '') {
+					if (this.val !== '' && this.decimal > 0) {
 						this.val = this.val + '.';
 						this.completion(this.decimal);
 					}
@@ -200,10 +209,19 @@
 				/*保存旧的值*/
 				let oldValue = this.val;
 				/* 20180810 added by SamHengOn: add '0' when clicked '.', if old value is empty */
-				if (oldValue === '' && value === '.') {
+				if (oldValue === '' && value === '.' && this.allowLeadingZero === false) {
 					this.val = '0';
 				}
 				/* end 20180810 added by SamHengOn */
+				/* 
+					20180814 added by SamHengOn: 
+					remove '0' if current value only have '0' and click 1-9 
+				*/
+				if (oldValue === '0' && ['0','1','2','3','4','5','6','7','8','9'].indexOf(value) > -1 
+					&& this.allowLeadingZero === false) {
+					this.val = '';
+				}
+				/* end 20180814 added by SamHengOn */
 				/*获取新的值*/
 				this.val = this.val + value;
 				/*检验新值, 如果没有通过检测, 恢复值*/
@@ -226,7 +244,8 @@
 				});
 			},
 			illegalInput (val) {
-				if (this.aIllegal.indexOf(val) > -1) {
+				if ((this.aIllegal.indexOf(val) > -1 && !this.allowLeadingZero)
+				|| ('.'.indexOf(val) > -1 && this.allowLeadingZero)) {
 					return false;
 				}
 				return true;
