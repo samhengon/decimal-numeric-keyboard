@@ -1,5 +1,5 @@
-## wc-keyboard
-基于 vue 封装的一个自定义数字键盘 + 输入框, 仿照大众点评闪惠买单.
+## decimal-numeric-keyboard
+基于 vue 封装的一个自定义数字键盘 + 输入框.
 
 ## why?
 1. 刚开始选用 input type = tel, 发现移动端没有办法输入小数
@@ -16,22 +16,27 @@
 ## 感谢
 [xwpongithub/better-keyboard](https://github.com/xwpongithub/better-keyboard)
 
+[helicopters/wc-keyboard]
+(https://github.com/helicopters/wc-keyboard)
+
 ## 使用方法
 ```shell
-npm i wc-keyboard --save
+npm i decimal-numeric-keyboard --save
 ```
 ```javascript
-import wcKeyBoard from 'wc-keyboard'
-import 'wc-keyboard/style.css'
-Vue.use(wcKeyBoard);
+import KeyBoard from 'decimal-numeric-keyboard'
+import 'decimal-numeric-keyboard/style.css'
+Vue.use(Keyboard);
 
 ```
 
 ```html
-<wc-keyboard
+<decimal-numeric-keyboard
 	v-model="value"   // 输入框的值
 	inter="5"         // 限制整数位数
 	decimal="2"       // 小数位数
 	placeholder="询问服务员后输入"
-	label="消费金额"/>
+	:allowLeadingZero="false"	// Keep zeros in front of the inputted value. NOTE: use with decimal="0"
+	label="消费金额"
+	currencylabel="HKD"	// Currency Label shown in front of the inputted value />
 ```
