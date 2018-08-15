@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 
-import KeyBoard from './wc-keyboard';
+import KeyBoard from './decimal-numeric-keyboard';
 Vue.use(KeyBoard);
 
 new Vue({

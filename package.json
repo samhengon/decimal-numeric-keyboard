@@ -1,13 +1,13 @@
 {
-  "name": "wc-publish-env",
+  "name": "decimal-numeric-publish-env",
   "version": "1.0.0",
   "description": "打包环境",
   "main": "index.js",
   "scripts": {
     "dev": "node build/server.js",
-    "compile": "node build/compile.js && npm publish ./wc-keyboard"
+    "compile": "node build/compile.js && npm publish ./decimal-numeric-keyboard"
   },
-  "author": "linfeng123",
+  "author": "samhengon",
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.24.0",

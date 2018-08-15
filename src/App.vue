@@ -10,7 +10,7 @@
 <template>
   <div id="aap">
     <div class="box">
-       <wc-keyboard 
+       <decimal-numeric-keyboard 
         placeholder="询问服务员后输入"
         label="消费金额"
         inter="5"
@@ -21,7 +21,7 @@
         ref="price" />
     </div>
     <div class="box">
-       <wc-keyboard 
+       <decimal-numeric-keyboard 
         placeholder="ttg2"
         label="haha2"
         inter="5"
