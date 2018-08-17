@@ -153,6 +153,7 @@
 				this.checkValue();
 				this.notify();
 
+				this.$emit('keyboardblur', this.label);
 			},
 			showKeyboard () {
 				this.keyboard = true;
