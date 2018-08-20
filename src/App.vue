@@ -20,7 +20,7 @@
         inter="5"
         decimal="2"
         :allowLeadingZero="false"
-        v-model="val"
+        v-model="expense"
         @keyboardtouchstart="test"
         @keyboardblur="HidePadding"
         ref="price" />
@@ -44,7 +44,7 @@
 export default {
   data() {
     return {
-      val: "",
+      expense: "",
       gg: "",
       isKeyboardShown: false
     };

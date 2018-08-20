@@ -44,10 +44,10 @@
 			<!-- 右侧内容 -->
 			<div class="content">
 				<p class="input">
-					<span class="currency" v-show="val">{{currencylabel}}</span>
-					{{val}}
+					<span class="currency" v-show="value">{{currencylabel}}</span>
+					{{value}}
 				</p>
-				<p class="placeholder" v-show="val.length === 0">
+				<p class="placeholder" v-show="value.length === 0">
 					{{placeholder}}
 				</p>
 				<!-- 光标 -->
@@ -101,7 +101,7 @@
 				cursor: false,
 				keyboard: false,
 				/*value 在组件中的值*/
-				val: '', 
+				newVal: '', 
 				aIllegal: ['00', '01' ,'02','03','04','05','06','07','08','09', '0..', '.'],
 				cursorDuration: 600,
 				bodyHeight: '',
@@ -168,22 +168,22 @@
 				this.cursor = false;
 			},
 			checkValue () {
-				if (parseFloat(this.val) === 0) {
-					this.val = '';
+				if (parseFloat(this.newVal) === 0) {
+					this.newVal = '';
 				}
 			},
 			/*判读是否需要加0*/
 			toCompletion () {
-				let list = this.value.split('.');
+				let list = this.newVal.split('.');
 				if (typeof list[1] === 'undefined') {
-					if (this.val !== '' && this.decimal > 0) {
-						this.val = this.val + '.';
+					if (this.newVal !== '' && this.decimal > 0) {
+						this.newVal = this.newVal + '.';
 						this.completion(this.decimal);
 					}
 				} else {
 					if (list[1].length < this.decimal) {
 						this.completion(this.decimal - list[1].length);
-					}					
+					}
 				}
 			},
 			completion (len) {
@@ -191,49 +191,53 @@
 				for(let i =0;i<len;i++){
 					v = v + '0';
 				}
-				this.val = this.val + v;
+				this.newVal = this.newVal + v;
 			},
 			notify () {
-				this.$emit('input',this.val);
+				this.$emit('input',this.newVal);
 			},
 			del () {
 				/*删除值并不会触发值的校验, 所以需要手动再触发一次*/
-				this.val = this.val.slice(0, -1);
+				this.newVal = this.newVal.slice(0, -1);
 				this.notify();
 			},
 			/*输入*/
-			typing (value) {
+			typing (typedValue) {
 				/*如果是点击删除*/
-				if (value === '') {
+				if (typedValue === '') {
 					this.del();
+					return;
 				}
 				/*保存旧的值*/
-				let oldValue = this.val;
+				let oldValue = this.value;
 				/* 20180810 added by SamHengOn: add '0' when clicked '.', if old value is empty */
-				if (oldValue === '' && value === '.' && this.allowLeadingZero === false) {
-					this.val = '0';
+				if (oldValue === '' && typedValue === '.' && this.allowLeadingZero === false) {
+					this.newVal = '0';
 				}
 				/* end 20180810 added by SamHengOn */
+				
+				/*获取新的值*/
 				/* 
 					20180814 added by SamHengOn: 
 					remove '0' if current value only have '0' and click 1-9 
 				*/
-				if (oldValue === '0' && ['0','1','2','3','4','5','6','7','8','9'].indexOf(value) > -1 
+				if (oldValue === '0' && ['1','2','3','4','5','6','7','8','9'].indexOf(typedValue) > -1 
 					&& this.allowLeadingZero === false) {
-					this.val = '';
+					this.newVal = typedValue;
+				} else {
+					this.newVal = oldValue + typedValue;
 				}
 				/* end 20180814 added by SamHengOn */
-				/*获取新的值*/
-				this.val = this.val + value;
+
 				/*检验新值, 如果没有通过检测, 恢复值*/
-				if (!this.passCheck(this.val)) {
-					this.val = oldValue;
+				if (!this.passCheck(this.newVal)) {
+					this.newVal = oldValue;
 					return;
 				}
 				/*为了让外界同步输入, 需要发送事件*/
 				this.notify();
 			},
-			passCheck (val) {
+			passCheck (checkVal) {
 				/*验证规则*/
 				let aRules = [
 						this.illegalInput,
@@ -241,35 +245,40 @@
 						this.accuracy
 					]
 				return aRules.every((item) => {
-					return item(val);
+					return item(checkVal);
 				});
 			},
-			illegalInput (val) {
-				if ((this.aIllegal.indexOf(val) > -1 && !this.allowLeadingZero)
-				|| ('.'.indexOf(val) > -1 && this.allowLeadingZero)) {
+			illegalInput (checkVal) {
+				if ((this.aIllegal.indexOf(checkVal) > -1 && !this.allowLeadingZero)
+				|| ('.'.indexOf(checkVal) > -1 && this.allowLeadingZero)) {
 					return false;
 				}
 				return true;
 			},
 			/*非法值*/
-			illegalValue (val) {
-				if (parseFloat(val) != val) {
+			illegalValue (checkVal) {
+				if (parseFloat(checkVal) != checkVal) {
 					return false;
 				}	
 				return true;			
 			},
 			/*验证精度*/
-			accuracy (val) {
-				let v = val.split('.')
+			accuracy (checkVal) {
+				let v = checkVal.split('.')
 				if (v[0].length > this.inter) {
 					return false;
 				}
 				if (v[1] && (v[1].length) > this.decimal) {
-					return false;					
+					return false;
 				}
-				return true;				
+				return true;
 			}	
+		},
+		watch: {
+			// resync the component "value" (for v-model) to local data newVal
+			value: function(val, oldVal) {
+				this.newVal = val;
+			}
 		}
 	}
-
 </script>
