@@ -79,10 +79,10 @@
 </style>
 <template>
 	<transition name="slide">
-		<div class="keyboard animated" v-show="show" @touchstart.stop="fn">
+		<div class="keyboard animated" v-show="show" @touchstart.stop.prevent="fn">
 			<!-- 完成 按钮-->
 			<div class="done">
-				<p class="text" @touchstart="complete">完成</p>
+				<p class="text" @touchstart.prevent="complete">完成</p>
 			</div>
 			<!-- 键盘区域 -->
 			<div class="list">

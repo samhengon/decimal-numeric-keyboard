@@ -62,12 +62,16 @@ export default {
         console.log("emit from keyboardtouchstart: Price Keyboard Clicked!");
         qtyKeyboardComponent.blur();
         this.isKeyboardShown = true;
-        this.$nextTick(() => document.getElementById("price-keyboard-div").scrollIntoView());
+        this.$nextTick(() =>
+          document.getElementById("price-keyboard-div").scrollIntoView()
+        );
       } else if (qtyKeyboardComponent.label === label) {
         console.log("emit from keyboardtouchstart: Qty Keyboard Clicked!");
         priceKeyboardComponent.blur();
         this.isKeyboardShown = true;
-        this.$nextTick(() => document.getElementById("qty-keyboard-div").scrollIntoView());
+        this.$nextTick(() =>
+          document.getElementById("qty-keyboard-div").scrollIntoView()
+        );
       }
     },
     HidePadding(label) {

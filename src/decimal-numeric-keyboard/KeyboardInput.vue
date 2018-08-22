@@ -16,28 +16,31 @@
     color: #333;
   }
   .step-down {
+    display: flex;
     margin-left: 5px;
 
     button {
       display: flex;
       border: 0;
-      font-size: 20px;
-      padding-left: 5px;
-      padding-right: 5px;
-      align-content: center;
-      vertical-align: middle;
-      text-align: center;
+      background: #ffffff;
+      font-size: unset;
+      // align-items: center;
+      // vertical-align: middle;
+      // text-align: center;
 
       span {
-        // display: block;
-        // position: absolute;
-        // transition: 0.3s;
-        // background: #ffffff;
-        // border-radius: 2px;
+        display: flex;
+        background: #eeeeee;
+        border-radius: 2px;
         -webkit-font-smoothing: antialiased;
         width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
         align-items: center;
         align-content: center;
+      }
+      span::before {
+        content: "\2796";
       }
     }
   }
@@ -62,28 +65,31 @@
     }
   }
   .step-up {
+    display: flex;
     margin-left: auto;
 
     button {
       display: flex;
       border: 0;
-      font-size: 20px;
-      padding-left: 5px;
-      padding-right: 5px;
-      align-content: center;
-      vertical-align: middle;
+      background: #ffffff;
+      font-size: unset;
+      // align-items: center;
+      // vertical-align: middle;
       text-align: center;
 
       span {
-        // display: block;
-        // position: absolute;
-        // transition: 0.3s;
-        // background: #ffffff;
-        // border-radius: 2px;
+        display: flex;
+        background: #eeeeee;
+        border-radius: 2px;
         -webkit-font-smoothing: antialiased;
         width: 100%;
-        align-items: center;
-        align-content: center;
+        padding-left: 5px;
+        padding-right: 5px;
+        // align-items: center;
+        // align-content: center;
+      }
+      span::before {
+        content: "\2795";
       }
     }
   }
@@ -93,12 +99,12 @@
 <template>
 	<div class="keyboard">
 		<!-- 自定义输入框 -->
-		<div class="input-box" @touchstart.stop="focus">
+		<div class="input-box" @touchstart.stop.prevent="focus">
 			<!-- 左侧标签 -->
 			<p class="label">{{label}} : </p>
       <div class="step-down" v-if="showStepButton">
-        <button class="step-down-button" @touchstart.stop="stepdown">
-          <span class="step-down-button-span">-</span>
+        <button class="step-down-button" @touchstart.stop.prevent="stepdown">
+          <span class="step-down-button-span"></span>
         </button>
       </div>
 			<!-- 右侧内容 -->
@@ -114,8 +120,8 @@
 				<p class="cursor" :style="{visibility: cursor ? 'visible' : 'hidden'}"></p>
 			</div>
       <div class="step-up" v-if="showStepButton">
-        <button class="step-up-button" @touchstart.stop="stepup">
-          <span class="step-up-button-span">+</span>
+        <button class="step-up-button" @touchstart.stop.prevent="stepup">
+          <span class="step-up-button-span"></span>
         </button>
       </div>
 		</div>
