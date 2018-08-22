@@ -19,6 +19,7 @@
         label="消费金额"
         inter="5"
         decimal="2"
+        stepSize="3"
         :allowLeadingZero="false"
         v-model="expense"
         @keyboardtouchstart="test"
