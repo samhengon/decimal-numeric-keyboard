@@ -15,8 +15,35 @@
   .label {
     color: #333;
   }
+  .step-down {
+    margin-left: 5px;
+
+    button {
+      display: flex;
+      border: 0;
+      font-size: 20px;
+      padding-left: 5px;
+      padding-right: 5px;
+      align-content: center;
+      vertical-align: middle;
+      text-align: center;
+
+      span {
+        // display: block;
+        // position: absolute;
+        // transition: 0.3s;
+        // background: #ffffff;
+        // border-radius: 2px;
+        -webkit-font-smoothing: antialiased;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+      }
+    }
+  }
   .content {
     display: flex;
+    margin-left: auto;
 
     .input {
       font-size: 20px;
@@ -33,22 +60,22 @@
     .currency {
       color: #c1c1c1;
     }
-    .step-button {
+  }
+  .step-up {
+    margin-left: auto;
+
+    button {
       display: flex;
-      margin-left: 5px;
-      width: 30px;
-      height: 30px;
       border: 0;
       font-size: 20px;
-      // position: relative;
-      // align-content: center;
-      align-items: center;
-      justify-content: space-between;
+      padding-left: 5px;
+      padding-right: 5px;
+      align-content: center;
       vertical-align: middle;
       text-align: center;
 
-      .step-button-span {
-        display: block;
+      span {
+        // display: block;
         // position: absolute;
         // transition: 0.3s;
         // background: #ffffff;
@@ -56,9 +83,11 @@
         -webkit-font-smoothing: antialiased;
         width: 100%;
         align-items: center;
+        align-content: center;
       }
     }
   }
+  
 }
 </style>
 <template>
@@ -67,11 +96,13 @@
 		<div class="input-box" @touchstart.stop="focus">
 			<!-- 左侧标签 -->
 			<p class="label">{{label}} : </p>
+      <div class="step-down" v-if="showStepButton">
+        <button class="step-down-button" @touchstart.stop="stepdown">
+          <span class="step-down-button-span">-</span>
+        </button>
+      </div>
 			<!-- 右侧内容 -->
 			<div class="content">
-				<button class="step-button" @touchstart.stop="stepup">
-					<span class="step-button-span">+</span>
-				</button>
 				<p class="input">
 					<span class="currency" v-show="value">{{currencylabel}}</span>
 					{{value}}
@@ -81,10 +112,12 @@
 				</p>
 				<!-- 光标 -->
 				<p class="cursor" :style="{visibility: cursor ? 'visible' : 'hidden'}"></p>
-				<button class="step-button" @touchstart.stop="stepdown">
-					<span class="step-button-span">-</span>
-				</button>
 			</div>
+      <div class="step-up" v-if="showStepButton">
+        <button class="step-up-button" @touchstart.stop="stepup">
+          <span class="step-up-button-span">+</span>
+        </button>
+      </div>
 		</div>
 		<!-- 自定义键盘 -->
 		<keyboard 
@@ -129,6 +162,9 @@ export default {
     },
     stepSize: {
       default: 0
+    },
+    showStepButton: {
+      default: false
     }
   },
   data() {
