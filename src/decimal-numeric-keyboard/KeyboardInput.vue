@@ -43,8 +43,7 @@
     margin-left: 5px;
 
     button {
-      span {
-      }
+      
       span::before {
         // content: "\2212";
         content: "\FF0D";
@@ -56,8 +55,7 @@
     margin-left: auto;
 
     button {
-      span {
-      }
+      
       span::before {
         // content: "\002B";
         content: "\FF0B";
