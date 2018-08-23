@@ -26,7 +26,7 @@
         label="消费金额"
         inter="5"
         decimal="2"
-        stepSize="3"
+        stepSize="0.01"
         :allowLeadingZero="false"
         :showStepButton="true"
         v-model="expense"

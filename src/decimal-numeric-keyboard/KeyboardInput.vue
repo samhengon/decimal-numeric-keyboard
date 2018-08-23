@@ -127,6 +127,7 @@
 </template>
 <script>
 import keyboard from "./keyboard";
+import Big from "big.js"
 export default {
   name: "KeyboardInput",
   components: {
@@ -361,7 +362,8 @@ export default {
       return true;
     },
     stepup() {
-      const resultVal = parseFloat(this.newVal) + parseFloat(this.stepSize);
+      this.newVal = (this.newVal === "") ? "0" : this.newVal;
+      const resultVal = Big(this.newVal).plus(Big(this.stepSize));
       console.log(resultVal + " " + isNaN(resultVal));
       if (isNaN(resultVal)) {
         this.newVal = this.stepSize.toString();
@@ -372,7 +374,8 @@ export default {
       this.blur();
     },
     stepdown() {
-      const resultVal = parseFloat(this.newVal) - parseFloat(this.stepSize);
+      this.newVal = (this.newVal === "") ? "0" : this.newVal;
+      const resultVal = Big(this.newVal).minus(Big(this.stepSize));
       console.log(resultVal + " " + isNaN(resultVal));
       if (isNaN(resultVal)) {
         this.newVal = "0";
