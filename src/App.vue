@@ -1,14 +1,21 @@
 <style>
 .box {
   height: 100%;
-  border: 1px solid #ccc;
-  height: 45px;
+  /* border: 1px solid #ccc; */
+  outline: 0.05rem solid #eee;
+  outline-offset: 0.2rem;
+  /* height: 45px; */
   padding: 10px;
   margin: 10px;
 }
 .keyboard-padding {
   display: block;
   height: 250px;
+}
+.input-slot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
 }
 </style>
 <template>
@@ -25,7 +32,9 @@
         v-model="expense"
         @keyboardtouchstart="test"
         @keyboardblur="HidePadding"
-        ref="price" />
+        ref="price">
+        <slot><i class="input-slot">Hello Slot!</i></slot>
+       </decimal-numeric-keyboard>
     </div>
     <div class="box" id="qty-keyboard-div">
        <decimal-numeric-keyboard 
